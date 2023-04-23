@@ -1,0 +1,9 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+ADD client.py .
+ADD screen.py .
+ADD util.py .
+
+ENTRYPOINT ["python", "client.py"]

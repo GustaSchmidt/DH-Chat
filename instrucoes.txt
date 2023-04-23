@@ -1,0 +1,11 @@
+# Instruções para executar o servidor
+
+# Fazer o donwload da imagem Docker
+docker pull hrchlhck/data-hiding:server
+
+# Executar o servidor
+docker run -it -p 8888:8888 --env-file=.env --rm --name servidor-data-hiding hrchlhck/data-hiding:server
+
+# Consultar IP do servidor
+docker inspect servidor-data-hiding 
+
