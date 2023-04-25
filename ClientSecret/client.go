@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net"
 	"os"
+
+	"github.com/rivo/tview"
 )
 
 const (
@@ -13,6 +15,7 @@ const (
 )
 
 var conn *net.TCPConn
+var app = tview.NewApplication()
 
 func registra_usuario() { //Sacanagem essa implementação em Pedrão
 	var usarname string
@@ -37,7 +40,33 @@ func registra_usuario() { //Sacanagem essa implementação em Pedrão
 	println(string("Usuarios conectados: " + string(online_users)))
 
 }
+func trata_usuario() {
+	for { //n vou trata erro não to nem ai
+		received := make([]byte, 2048)
+		length, _ := conn.Read(received)
+		fmt.Println(string(received[:length]))
+		// var msg string
+		// fmt.Scanf("%s", &msg)
+		// conn.Write([]byte(msg))
+	}
 
+}
+func GUI() {
+	// Initialize application
+	user_list := tview.NewBox().SetBorder(true).SetTitle("Usuarios")
+	mensage_box := tview.NewBox().SetBorder(true).SetTitle("Chat Secreto")
+	ininputs_msg := tview.NewBox().SetBorder(true).SetTitle("Input de mensagens")
+
+	flex := tview.NewFlex().
+		AddItem(user_list, 0, 1, false).
+		AddItem(tview.NewFlex().SetDirection(tview.FlexRow).
+			AddItem(mensage_box, 0, 3, false).
+			AddItem(ininputs_msg, 5, 1, false), 0, 2, false)
+	if err := app.SetRoot(flex, true).SetFocus(flex).Run(); err != nil {
+		panic(err)
+	}
+
+}
 func main() {
 	tcpServer, err := net.ResolveTCPAddr(TYPE, HOST+":"+PORT)
 
@@ -57,7 +86,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	registra_usuario() //Só para deixar claro que isso foi sacanagem
+	//Criando uma interface pro negocio
+	GUI()
 
+	//registra_usuario() //Só para deixar claro que isso foi sacanagem
+	//trata_usuario()
 	// conn.Close()
 }
