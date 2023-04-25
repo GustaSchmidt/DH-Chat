@@ -52,19 +52,32 @@ func trata_usuario() {
 
 }
 func GUI() {
-	// Initialize application
-	user_list := tview.NewBox().SetBorder(true).SetTitle("Usuarios")
+	// No interact
+	user_list := tview.NewList().ShowSecondaryText(false)
 	mensage_box := tview.NewBox().SetBorder(true).SetTitle("Chat Secreto")
-	ininputs_msg := tview.NewBox().SetBorder(true).SetTitle("Input de mensagens")
+
+	//Interaction
+	input_msg := tview.NewInputField().SetLabel("Mensagem O: ")
+	input_secret := tview.NewInputField().SetLabel("Mensagem S: ")
+	send_bt := tview.NewButton("Enviar").SetSelectedFunc(func() {
+		//Enviar msg
+		mensage_box.SetTitle("tem que fazer o bagua enviar msg")
+	})
+
+	//Conteudos
+	user_list.AddItem("tese", "rew", '*', nil)
+	user_list.SetBorder(true)
 
 	flex := tview.NewFlex().
-		AddItem(user_list, 0, 1, false).
+		AddItem(user_list, 0, 25, false).
 		AddItem(tview.NewFlex().SetDirection(tview.FlexRow).
 			AddItem(mensage_box, 0, 3, false).
-			AddItem(ininputs_msg, 5, 1, false), 0, 2, false)
-	if err := app.SetRoot(flex, true).SetFocus(flex).Run(); err != nil {
-		panic(err)
-	}
+			AddItem(input_msg, 2, 1, false).
+			AddItem(input_secret, 2, 1, false).
+			AddItem(send_bt, 1, 1, false), 0, 75, false)
+
+	//INIT INTERFACE
+	app.SetRoot(flex, true).Run()
 
 }
 func main() {
