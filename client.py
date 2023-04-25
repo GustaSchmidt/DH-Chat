@@ -10,29 +10,10 @@ from screen import Screen
 
 USERNAME = ""
 
-# SERVER_IP = str(os.environ['SERVER_IP'])
-# SERVER_PORT = int(os.environ['SERVER_PORT'])
-
 SERVER_IP = 'localhost'
 # SERVER_PORT = 8888
 SERVER_PORT = 8080
 
-# AUTHENTICATE = str(os.environ['AUTHENTICATE'])
-AUTHENTICATE = "no"
-
-def autenticar(server: socket.socket, screen: Screen) -> bool:
-    global USERNAME
-    
-
-    USERNAME = uname
-   
-    confirm = server.recv(32).decode()
-
-    if confirm != "OK\x01":
-        screen.set_text(confirm)
-        return False
-
-    return True
 
 
 if __name__ == '__main__':
