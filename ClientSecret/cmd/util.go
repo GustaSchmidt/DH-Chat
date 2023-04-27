@@ -57,10 +57,17 @@ func envia_msg(msg string, msgSecret string) {
 	conn.Write([]byte(msg))
 }
 func recebe_msg() {
+	var text_reciver = mensage_box.BatchWriter()
+	defer text_reciver.Close()
+
+	text_reciver.Clear()
 	for {
 		received := make([]byte, 2048)
 		length, _ := conn.Read(received)
-		print(fmt.Sprint(string(received[:length])))
+		// fmt.Fprintf(mensage_box, "%s ", fmt.Sprint(string(received[:length])))
+		// app.Sync()
+		// fmt.Fprintln(text_reciver, fmt.Sprint(string(received[:length])))
+		fmt.Println(fmt.Sprint(string(received[:length])))
 	}
 
 }

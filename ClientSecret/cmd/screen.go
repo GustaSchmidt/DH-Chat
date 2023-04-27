@@ -16,16 +16,20 @@ var mensage_box = tview.NewTextView().
 	})
 
 func chat_main() {
-
 	//inputs de msg
-	input_msg := tview.NewInputField().SetLabel("Mensagem O: ")
-	input_secret := tview.NewInputField().SetLabel("Mensagem S: ")
-	send_bt := tview.NewButton("Enviar").SetSelectedFunc(func() {
-		//Enviar msg
-		envia_msg(input_msg.GetText(), input_secret.GetText())
-		input_msg.SetText("")
-		input_secret.SetText("")
-	})
+	var input_msg = tview.NewInputField().
+		SetLabel("Mensagem O: ")
+	var input_secret = tview.NewInputField().
+		SetLabel("Mensagem S: ")
+	var send_bt = tview.NewButton("Enviar").
+		SetSelectedFunc(func() {
+			//Enviar msg
+			envia_msg(input_msg.GetText(), input_secret.GetText())
+			input_msg.SetText("")
+			input_secret.SetText("")
+			app.SetFocus(input_msg)
+			app.Sync()
+		})
 
 	//TODO: receber mensagem de forma descente
 	fmt.Fprintf(mensage_box, "%s ", "word")
@@ -44,5 +48,5 @@ func chat_main() {
 			AddItem(send_bt, 1, 1, false), 0, 75, false)
 
 	//INIT INTERFACE
-	app.SetRoot(flex, true).EnableMouse(true).Run()
+	app.SetRoot(flex, true).EnableMouse(true).SetFocus(input_msg).Run()
 }
