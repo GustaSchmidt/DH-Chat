@@ -37,9 +37,16 @@ func chat_main() {
 		for {
 			received := make([]byte, 2048)
 			length, _ := conn.Read(received)
+			msg_recebida := fmt.Sprint(string(received[:length]))
 			//TODO: ver mensagem recebida e tratar se for do servidor ou do usuario!
 
-			fmt.Fprintln(mensage_box, "[#ffecdb]"+fmt.Sprint(string(received[:length])))
+			//Tratando msg esteganografada
+			steg_msg := decodeString(msg_recebida)
+			if steg_msg != "" {
+				fmt.Fprintln(mensage_box, "[#d92400] (secret) -> "+steg_msg)
+			}
+
+			fmt.Fprintln(mensage_box, "[#ffecdb]"+msg_recebida)
 
 			//BUG: Workaround bug prenchendo texto no lugar errado
 			input_msg.SetText("")
