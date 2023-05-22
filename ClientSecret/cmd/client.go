@@ -10,4 +10,5 @@ func main() {
 	conecta_servidor()
 	registra_usuario()
 	chat_main()
+
 }

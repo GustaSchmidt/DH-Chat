@@ -31,8 +31,21 @@ func chat_main() {
 			app.Sync()
 		})
 
-	//TODO: receber mensagem de forma descente
-	fmt.Fprintf(mensage_box, "%s ", "word")
+	//Recebe Mensagens do servidor
+	fmt.Fprintf(mensage_box, "%s ", "[#fff333] Bem Vindo ao servidor: "+HOST+"\n")
+	go func() {
+		for {
+			received := make([]byte, 2048)
+			length, _ := conn.Read(received)
+			//TODO: ver mensagem recebida e tratar se for do servidor ou do usuario!
+
+			fmt.Fprintln(mensage_box, "[#ffecdb]"+fmt.Sprint(string(received[:length])))
+
+			//BUG: Workaround bug prenchendo texto no lugar errado
+			input_msg.SetText("")
+			input_secret.SetText("")
+		}
+	}()
 
 	//Adicona o propio usario a lista de usuarios
 	user_list.AddItem(username, "O propio", '-', nil)
@@ -49,4 +62,5 @@ func chat_main() {
 
 	//INIT INTERFACE
 	app.SetRoot(flex, true).EnableMouse(true).SetFocus(input_msg).Run()
+
 }

@@ -9,6 +9,7 @@ var conn *net.TCPConn
 var username string
 
 func conecta_servidor() string {
+	fmt.Printf("Connectando ao servidor")
 	tcpServer, err := net.ResolveTCPAddr(TYPE, HOST+":"+PORT)
 
 	if err != nil {
@@ -55,19 +56,9 @@ func envia_msg(msg string, msgSecret string) {
 	//estegranografar aqui a msg
 	print(msg)
 	conn.Write([]byte(msg))
-}
-func recebe_msg() {
-	var text_reciver = mensage_box.BatchWriter()
-	defer text_reciver.Close()
-
-	text_reciver.Clear()
-	for {
-		received := make([]byte, 2048)
-		length, _ := conn.Read(received)
-		// fmt.Fprintf(mensage_box, "%s ", fmt.Sprint(string(received[:length])))
-		// app.Sync()
-		// fmt.Fprintln(text_reciver, fmt.Sprint(string(received[:length])))
-		fmt.Println(fmt.Sprint(string(received[:length])))
+	fmt.Fprintln(mensage_box, "[#1aab00] VOCE -> "+msg)
+	if msgSecret != "" {
+		fmt.Fprintln(mensage_box, "[#cf1600] VOCE EM SEGREDO -> "+msgSecret)
 	}
 
 }
